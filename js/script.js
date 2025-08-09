@@ -1,18 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all functionality with mobile-first approach
-    initMobileOptimizations();
+    // Check authentication status on protected pages
     checkAuth();
+    
+    // Initialize form handlers
     initForms();
+    
+    // Initialize payment handlers
     initPayment();
+    
+    // Initialize admin features
     initAdmin();
+    
+    // Initialize access code functionality
     initAccessCode();
+    
+    // Initialize course functionality
     initCourses();
-    initResponsiveUI();
+    
+    // Initialize localStorage with default data if empty
+    initLocalStorage();
 });
 
 // Mobile-specific optimizations
 function initMobileOptimizations() {
-    // Add touch-friendly class to body if on touch device
+    // Add touch device detection with ontouchstart
     if ('ontouchstart' in window || navigator.maxTouchPoints) {
         document.body.classList.add('touch-device');
         
@@ -628,7 +639,9 @@ function generateAccessCode() {
     
     setTimeout(() => {
         try {
-            const code = generateRandomCode(12); // Longer code for better security
+            // Generate 8-character code (no prefixes or hyphens)
+            const code = generateRandomCode(8);
+            
             const newCode = {
                 id: Date.now().toString(),
                 code,
@@ -665,15 +678,13 @@ function generateAccessCode() {
     }, 500);
 }
 
-function generateRandomCode(length) {
+function generateRandomCode(length = 8) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = '';
     for (let i = 0; i < length; i++) {
         result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    
-    // Format code with hyphens for better readability (e.g., NEXORA-7X9B2-KL4M8)
-    return `NEXORA-${result.substring(0, 5)}-${result.substring(5, 9)}`;
+    return result;
 }
 
 function loadManageAdmins() {
@@ -1106,6 +1117,3 @@ function initLocalStorage() {
         localStorage.setItem('accessCodes', JSON.stringify([]));
     }
 }
-
-// Initialize on load
-initLocalStorage();
