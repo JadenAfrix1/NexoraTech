@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Access Code | NEXORA-TECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Access code specific styling */
+        .access-code-input-container {
+            max-width: 100%;
+            margin: 0 auto 1.2rem;
+            position: relative;
+        }
+        
+        .code-input-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .code-input {
+            flex: 1;
+            min-width: 2.2rem;
+            height: 2.6rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            background: rgba(15, 30, 50, 0.5);
+            border: 2px solid rgba(30, 64, 175, 0.5);
+            color: #e0e0ff;
+            transition: all 0.2s ease;
+        }
+        
+        .code-input:focus {
+            border-color: #4facfe;
+            background: rgba(15, 30, 50, 0.7);
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+            outline: none;
+        }
+        
+        .code-input.filled {
+            background: rgba(15, 30, 50, 0.7);
+            border-color: #4facfe;
+        }
+        
+        .code-input.error {
+            border-color: #ff6b6b;
+            background: rgba(179, 27, 27, 0.1);
+        }
+        
+        /* Instructions */
+        .code-instructions {
+            text-align: center;
+            color: #c0c0ff;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            padding: 0 1rem;
+        }
+        
+        .code-instructions strong {
+            color: #4facfe;
+        }
+        
+        /* Loading state for button */
+        .btn.loading {
+            position: relative;
+            color: transparent !important;
+        }
+        
+        .btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            top: 50%;
+            left: 50%;
+            margin-top: -7px;
+            margin-left: -7px;
+            border: 2px solid #4facfe;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Success/error messages */
+        .code-message {
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            display: none;
+            font-size: 0.9rem;
+        }
+        
+        .code-success {
+            background: rgba(10, 150, 80, 0.2);
+            color: #00d2d3;
+        }
+        
+        .code-error {
+            background: rgba(179, 27, 27, 0.2);
+            color: #ff6b6b;
+        }
+        
+        /* Support section */
+        .support-section {
+            background: rgba(10, 20, 40, 0.7);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .support-contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 0.6rem;
+            flex-wrap: wrap;
+        }
+        
+        .support-icon {
+            background: rgba(79, 172, 254, 0.2);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .support-text {
+            text-align: left;
+            font-size: 0.85rem;
+        }
+        
+        /* Mobile-specific adjustments */
+        @media (max-width: 480px) {
+            .code-input {
+                min-width: 1.8rem;
+                height: 2.2rem;
+                font-size: 1rem;
+            }
+            
+            .code-input-wrapper {
+                gap: 0.3rem;
+            }
+            
+            .btn {
+                width: 100% !important;
+                padding: 0.7rem 1rem !important;
+                font-size: 0.95rem !important;
+            }
+            
+            .support-text {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="courses.html" class="logo"><i class="fas fa-infinity"></i> NEXORA-TECH</a>
+                <ul class="nav-links auth-links">
+                    <!-- Will be populated by JavaScript -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="container">
+            <div class="access-code-container">
+                <h2 class="section-title neon-text" style="margin-bottom: 1rem;">Enter Access Code</h2>
+                
+                <div style="background: rgba(10, 20, 40, 0.7); border-radius: 10px; padding: 1rem;">
+                    <h3 class="neon-text" style="font-size: 1.3rem; margin-bottom: 0.6rem;" id="course-name">Course Name</h3>
+                    <p style="color: #c0c0ff; margin-bottom: 1rem; line-height: 1.4; font-size: 0.9rem;">
+                        Please enter your access code to unlock this course. The code is case-insensitive and may contain letters and numbers.
+                    </p>
+                    
+                    <div class="code-instructions">
+                        Enter the 8-character code you received after payment. <strong>Example: ABC123XY</strong>
+                    </div>
+                    
+                    <div class="access-code-input-container">
+                        <div class="code-input-wrapper">
+                            <input type="text" class="form-control code-input" maxlength="1" inputmode="text" pattern="[A-Za-z0-9]">
+                            <input type="text" class="form-control code-input" maxlength="1" inputmode="text" pattern="[A-Za-z0-9]">
+                            <input type="text" class="form-control code-input" maxlength="1" inputmode="text" pattern="[A-Za-z0-9]">
+                            <input type="text" class="form-control code-input" maxlength="1" inputmode="text" pattern="[A-Za-z0-9]">
+                            <input type="text" class="form-control code-input" maxlength="1" inputmode="text" pattern="[A-Za-z0-9]">
+                            <input type="text" class="form-control code-input" maxlength="1" inputmode="text" pattern="[A-Za-z0-9]">
+                            <input type="text" class="form-control code-input" maxlength="1" inputmode="text" pattern="[A-Za-z0-9]">
+                            <input type="text" class="form-control code-input" maxlength="1" inputmode="text" pattern="[A-Za-z0-9]">
+                        </div>
+                    </div>
+                    
+                    <div id="code-message" class="code-message"></div>
+                    
+                    <button id="verify-code-btn" class="btn btn-primary" style="width: 100%; margin-top: 0.4rem; padding: 0.7rem;">
+                        Verify Code
+                    </button>
+                </div>
+                
+                <div style="text-align: center; margin-top: 1.2rem;">
+                    <p style="color: #c0c0ff; margin-bottom: 0.6rem; font-size: 0.9rem;">Don't have an access code? Purchase one now:</p>
+                    <a href="payment.html" class="btn btn-outline" style="width: 100%; max-width: 100%; padding: 0.7rem;">
+                        <i class="fab fa-whatsapp"></i> Purchase Access Code
+                    </a>
+                </div>
+                
+                <div class="support-section">
+                    <h3 style="color: #4facfe; margin-bottom: 0.8rem; font-size: 1.1rem; text-align: center;">Need Help?</h3>
+                    <p style="color: #c0c0ff; text-align: center; line-height: 1.4; font-size: 0.85rem;">
+                        Contact our support team if you need assistance with your access code.
+                    </p>
+                    
+                    <div class="support-contact">
+                        <div class="support-icon">
+                            <i class="fab fa-whatsapp" style="color: #4facfe; font-size: 0.9rem;"></i>
+                        </div>
+                        <div class="support-text">
+                            <div style="color: #4facfe; font-weight: 600; font-size: 0.9rem;">WhatsApp Support</div>
+                            <div style="color: #c0c0ff;">Available 9AM - 9PM GMT+2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>2025 NEXORA-TECH | All Rights Reserved</p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+    <script>
+        // Set course name from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const course = localStorage.getItem('selectedCourse');
+            if (course) {
+                document.getElementById('course-name').textContent = course;
+            } else {
+                // Redirect if no course selected
+                window.location.href = 'courses.html';
+            }
+            
+            // Initialize code input fields
+            initCodeInput();
+            
+            // Initialize verify button
+            document.getElementById('verify-code-btn').addEventListener('click', verifyCode);
+        });
+        
+        function initCodeInput() {
+            const codeInputs = document.querySelectorAll('.code-input');
+            
+            codeInputs.forEach((input, index) => {
+                // Auto-focus next input
+                input.addEventListener('input', function() {
+                    if (this.value && index < codeInputs.length - 1) {
+                        codeInputs[index + 1].focus();
+                    }
+                    
+                    // Add filled class for visual feedback
+                    this.classList.add('filled');
+                    this.classList.remove('error');
+                });
+                
+                // Handle backspace
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && !this.value && index > 0) {
+                        codeInputs[index - 1].focus();
+                        codeInputs[index - 1].classList.remove('filled');
+                        codeInputs[index - 1].classList.remove('error');
+                    }
+                });
+                
+                // Allow only alphanumeric characters and auto-uppercase
+                input.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+                });
+                
+                // Clear error state when typing
+                input.addEventListener('focus', function() {
+                    this.classList.remove('error');
+                });
+            });
+            
+            // Focus on first input
+            if (codeInputs.length > 0) {
+                codeInputs[0].focus();
+            }
+        }
+        
+        function verifyCode() {
+            const codeInputs = document.querySelectorAll('.code-input');
+            const code = Array.from(codeInputs).map(input => input.value).join('').toUpperCase();
+            const course = localStorage.getItem('selectedCourse');
+            const messageElement = document.getElementById('code-message');
+            
+            // Clear previous messages
+            messageElement.style.display = 'none';
+            messageElement.className = 'code-message';
+            
+            // Validate code length
+            if (code.length < 8) {
+                // Mark empty fields with error
+                codeInputs.forEach((input, index) => {
+                    if (index >= code.length) {
+                        input.classList.add('error');
+                    }
+                });
+                
+                showMessage('Please enter a complete 8-character access code.', 'error');
+                resetButton();
+                return;
+            }
+            
+            // Show loading state
+            const btn = document.getElementById('verify-code-btn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            // Simulate verification process
+            setTimeout(() => {
+                try {
+                    const codes = JSON.parse(localStorage.getItem('accessCodes') || '[]');
+                    const codeObj = codes.find(c => 
+                        c.code.replace(/-/g, '').toUpperCase() === code.replace(/-/g, '').toUpperCase() && 
+                        c.course === course
+                    );
+                    
+                    if (!codeObj) {
+                        // Mark all fields with error
+                        codeInputs.forEach(input => {
+                            input.classList.add('error');
+                        });
+                        
+                        showMessage('Invalid access code for this course!', 'error');
+                        resetButton();
+                        return;
+                    }
+                    
+                    if (codeObj.status === 'used') {
+                        // Mark all fields with error
+                        codeInputs.forEach(input => {
+                            input.classList.add('error');
+                        });
+                        
+                        showMessage('This access code has already been used!', 'error');
+                        resetButton();
+                        return;
+                    }
+                    
+                    // Update code status
+                    const user = JSON.parse(localStorage.getItem('currentUser'));
+                    const updatedCodes = codes.map(c => 
+                        c.code.replace(/-/g, '').toUpperCase() === code.replace(/-/g, '').toUpperCase() ? 
+                        {...c, status: 'used', userEmail: user.email} : c
+                    );
+                    localStorage.setItem('accessCodes', JSON.stringify(updatedCodes));
+                    
+                    // Add course to user
+                    user.courses = user.courses || [];
+                    if (!user.courses.includes(course)) {
+                        user.courses.push(course);
+                        const users = JSON.parse(localStorage.getItem('users') || '[]');
+                        const userIndex = users.findIndex(u => u.id === user.id);
+                        if (userIndex !== -1) {
+                            users[userIndex] = user;
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                    }
+                    
+                    // Show success and redirect
+                    showMessage('Access code verified successfully! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        if (course === 'YouTube Automation') {
+                            window.location.href = 'youtube-automation.html';
+                        } else if (course === 'Digital Marketing') {
+                            window.location.href = 'digital-marketing.html';
+                        } else if (course === 'Data Science Fundamentals') {
+                            window.location.href = 'data-science.html';
+                        }
+                    }, 1500);
+                    
+                } catch (e) {
+                    // Mark all fields with error
+                    codeInputs.forEach(input => {
+                        input.classList.add('error');
+                    });
+                    
+                    showMessage('Error verifying access code. Please try again.', 'error');
+                    resetButton();
+                }
+            }, 800);
+        }
+        
+        function showMessage(message, type) {
+            const messageElement = document.getElementById('code-message');
+            messageElement.textContent = message;
+            messageElement.className = `code-message code-${type}`;
+            messageElement.style.display = 'block';
+        }
+        
+        function resetButton() {
+            const btn = document.getElementById('verify-code-btn');
+            btn.classList.remove('loading');
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

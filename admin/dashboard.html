@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Admin Dashboard | NEXORA-TECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <style>
+        /* Reset & Mobile-First Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0e17;
+            color: #e0e0ff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header & Navbar */
+        header {
+            background: rgba(10, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1a2238;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            color: #4facfe;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #c0c0ff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4facfe;
+        }
+
+        /* Main Content Layout */
+        .content {
+            flex: 1;
+            padding: 1.5rem 0;
+        }
+
+        .admin-dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(10, 20, 40, 0.7);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: #c0c0ff;
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar a.active,
+        .sidebar a:hover {
+            background: #1a2238;
+            color: #4facfe;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+        }
+
+        .admin-header h2 {
+            color: #4facfe;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Stats Grid */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .admin-dashboard {
+                flex-direction: row;
+            }
+
+            .sidebar {
+                min-width: 200px;
+                max-width: 220px;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            background: rgba(10, 20, 40, 0.7);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .label {
+            color: #c0c0ff;
+            font-size: 0.95rem;
+        }
+
+        /* Recent Activity Table */
+        .activity-section {
+            background: rgba(10, 20, 40, 0.7);
+            padding: 1.2rem;
+            border-radius: 10px;
+        }
+
+        .activity-section h3 {
+            color: #4facfe;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        table.table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        table.table th,
+        table.table td {
+            padding: 0.7rem;
+            text-align: left;
+            border-bottom: 1px solid #1a2238;
+            color: #e0e0ff;
+        }
+
+        table.table th {
+            color: #c0c0ff;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 1.2rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7a7a9d;
+            border-top: 1px solid #1a2238;
+        }
+
+        /* Neon Text Class (Reusable) */
+        .neon-text {
+            text-shadow: 0 0 5px #4facfe, 0 0 10px #4facfe;
+        }
+
+        /* Responsive Table Scroll */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="../../courses.html" class="logo"><i class="fas fa-infinity"></i> NEXORA-TECH</a>
+                <ul class="nav-links auth-links">
+                    <!-- Populated by JavaScript -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="container">
+            <div class="admin-dashboard">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <ul>
+                        <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="manage-codes.html"><i class="fas fa-key"></i> Manage Codes</a></li>
+                        <li><a href="manage-admins.html"><i class="fas fa-users-cog"></i> Manage Admins</a></li>
+                    </ul>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="main-content">
+                    <div class="admin-header">
+                        <h2 class="neon-text">Admin Dashboard</h2>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div id="total-users" class="value" style="color: #4facfe;">0</div>
+                            <div class="label">Total Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div id="total-codes" class="value" style="color: #00d2d3;">0</div>
+                            <div class="label">Total Codes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div id="used-codes" class="value" style="color: #f2a900;">0</div>
+                            <div class="label">Used Codes</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="activity-section">
+                        <h3>Recent Activity</h3>
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Activity</th>
+                                        <th>User</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>10:24 AM</td>
+                                        <td>Generated access code</td>
+                                        <td>Admin</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9:45 AM</td>
+                                        <td>User registered</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8:30 AM</td>
+                                        <td>Access code used</td>
+                                        <td>jane@example.com</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>2025 NEXORA-TECH | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

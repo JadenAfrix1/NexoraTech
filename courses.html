@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Courses | NEXORA-TECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo"><i class="fas fa-infinity"></i> NEXORA-TECH</a>
+                <ul class="nav-links auth-links">
+                    <!-- Will be populated by JavaScript -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="neon-text">YOUR COURSES</h2>
+            </div>
+            
+            <p style="text-align: center; color: #c0c0ff; margin-bottom: 2rem;">
+                Select a course to access its content
+            </p>
+            
+            <div class="course-grid">
+                <div class="course-card" data-course="YouTube Automation">
+                    <div class="course-image">
+                        <!-- REPLACE THIS URL WITH YOUR OWN YOUTUBE LOGO -->
+                        <img src="https://example.com/logos/youtube-automation.png" 
+                             alt="YouTube Automation Logo" 
+                             style="width: 60px; height: auto; margin: 15px auto;">
+                    </div>
+                    <div class="course-details">
+                        <h3>YouTube Automation</h3>
+                        <p>Master YouTube automation and build passive income channels</p>
+                        <div class="price-tag">
+                            <span class="usd-price">$20 USD</span>
+                            <span class="naira-price">≈ ₦29,000 Naira</span>
+                        </div>
+                        <button class="btn btn-primary">Access Course</button>
+                    </div>
+                </div>
+                
+                <div class="course-card" data-course="Digital Marketing">
+                    <div class="course-image">
+                        <!-- REPLACE THIS URL WITH YOUR OWN DIGITAL MARKETING LOGO -->
+                        <img src="https://example.com/logos/digital-marketing.png" 
+                             alt="Digital Marketing Logo" 
+                             style="width: 60px; height: auto; margin: 15px auto;">
+                    </div>
+                    <div class="course-details">
+                        <h3>Digital Marketing</h3>
+                        <p>Complete digital marketing mastery program</p>
+                        <div class="price-tag">
+                            <span class="usd-price">$12 USD</span>
+                            <span class="naira-price">≈ ₦17,400 Naira</span>
+                        </div>
+                        <button class="btn btn-primary">Access Course</button>
+                    </div>
+                </div>
+                
+                <div class="course-card" data-course="Data Science Fundamentals">
+                    <div class="course-image">
+                        <!-- REPLACE THIS URL WITH YOUR OWN DATA SCIENCE LOGO -->
+                        <img src="https://example.com/logos/data-science.png" 
+                             alt="Data Science Logo" 
+                             style="width: 60px; height: auto; margin: 15px auto;">
+                    </div>
+                    <div class="course-details">
+                        <h3>Data Science Fundamentals</h3>
+                        <p>Learn the basics of data science and analytics</p>
+                        <div class="price-tag" style="background: rgba(0, 180, 100, 0.3);">
+                            <span class="usd-price">FREE</span>
+                        </div>
+                        <button class="btn btn-success">Access Course</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>2025 NEXORA-TECH | All Rights Reserved</p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+    <script>
+        // Course selection functionality
+        document.querySelectorAll('.course-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const courseName = this.getAttribute('data-course');
+                localStorage.setItem('selectedCourse', courseName);
+                
+                if (courseName === 'Data Science Fundamentals') {
+                    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                    if (user.id) {
+                        user.courses = user.courses || [];
+                        if (!user.courses.includes(courseName)) {
+                            user.courses.push(courseName);
+                            const users = JSON.parse(localStorage.getItem('users') || '[]');
+                            const userIndex = users.findIndex(u => u.id === user.id);
+                            if (userIndex !== -1) {
+                                users[userIndex] = user;
+                                localStorage.setItem('users', JSON.stringify(users));
+                            }
+                            localStorage.setItem('currentUser', JSON.stringify(user));
+                        }
+                    }
+                    window.location.href = 'data-science.html';
+                } else {
+                    window.location.href = 'access-code.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

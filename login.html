@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login | NEXORA-TECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Form container optimizations */
+        .form-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: rgba(15, 25, 50, 0.7);
+            border-radius: 10px;
+            padding: 1.2rem;
+            box-shadow: 0 0 15px rgba(0, 100, 255, 0.15);
+            border: 1px solid rgba(30, 64, 175, 0.3);
+        }
+        
+        /* Form group adjustments */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            color: #c0c0ff;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.7rem;
+            background: rgba(10, 20, 40, 0.7);
+            border: 1px solid rgba(30, 64, 175, 0.5);
+            border-radius: 8px;
+            color: #e0e0ff;
+            font-size: 0.95rem;
+            height: 42px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+        }
+        
+        /* Button adjustments */
+        .btn {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        /* WhatsApp button */
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #075E54 0%, #128C7E 100%);
+            margin-top: 1.2rem;
+            padding: 0.7rem;
+            width: 100%;
+        }
+        
+        /* Loading state for button */
+        .btn.loading {
+            position: relative;
+            color: transparent !important;
+        }
+        
+        .btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            top: 50%;
+            left: 50%;
+            margin-top: -7px;
+            margin-left: -7px;
+            border: 2px solid #4facfe;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo"><i class="fas fa-infinity"></i> NEXORA-TECH</a>
+                <ul class="nav-links">
+                    <li><a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="container">
+            <div class="form-container">
+                <h2 class="section-title neon-text" style="margin-bottom: 1rem; font-size: 1.6rem;">Login to Your Account</h2>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 1rem;">
+                        Login
+                    </button>
+                    <div style="text-align: center;">
+                        <p style="color: #c0c0ff; font-size: 0.9rem; margin-bottom: 0.8rem;">Don't have an account? <a href="signup.html" style="color: #4facfe;">Sign up</a></p>
+                    </div>
+                    
+                    <!-- Clean WhatsApp button with no extra text -->
+                    <a href="https://whatsapp.com/channel/0029Vb6K4nw96H4LOMaOLF22" class="btn whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Join WhatsApp Channel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>2025 NEXORA-TECH | All Rights Reserved</p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Clear previous errors
+            document.querySelectorAll('.form-control').forEach(input => {
+                input.style.borderColor = '';
+            });
+            
+            let isValid = true;
+            let errorMessage = '';
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.trim() || !emailRegex.test(email)) {
+                document.getElementById('email').style.borderColor = '#ff6b6b';
+                isValid = false;
+                errorMessage = 'Please enter a valid email address';
+            }
+            
+            // Validate password
+            if (password.length < 6) {
+                document.getElementById('password').style.borderColor = '#ff6b6b';
+                isValid = false;
+                errorMessage = 'Password must be at least 6 characters';
+            }
+            
+            if (!isValid) {
+                if (errorMessage) {
+                    showNotification(errorMessage, 'error');
+                }
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = document.querySelector('#login-form button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+            
+            // Simulate login process
+            setTimeout(() => {
+                try {
+                    // Check if user exists
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    const user = users.find(u => u.email === email && u.password === password);
+                    
+                    if (user) {
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                        
+                        showNotification('Login successful!', 'success');
+                        
+                        // Redirect to courses page
+                        setTimeout(() => {
+                            window.location.href = 'courses.html';
+                        }, 1000);
+                    } else {
+                        // Check if it's the main admin
+                        if (email === 'tawandamahachi07@gmail.com' && password === 'mahachi2007') {
+                            const adminUser = {
+                                id: 'admin',
+                                name: 'Main Admin',
+                                email: 'tawandamahachi07@gmail.com',
+                                isAdmin: true,
+                                courses: []
+                            };
+                            
+                            localStorage.setItem('currentUser', JSON.stringify(adminUser));
+                            
+                            showNotification('Login successful!', 'success');
+                            
+                            // Redirect to admin dashboard
+                            setTimeout(() => {
+                                window.location.href = 'admin/dashboard.html';
+                            }, 1000);
+                        } else {
+                            showNotification('Invalid email or password', 'error');
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                            submitBtn.classList.remove('loading');
+                        }
+                    }
+                } catch (e) {
+                    showNotification('Error during login. Please try again.', 'error');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                }
+            }, 800);
+        });
+        
+        function showNotification(message, type = 'info') {
+            // Create notification element if doesn't exist
+            let notification = document.getElementById('notification');
+            if (!notification) {
+                notification = document.createElement('div');
+                notification.id = 'notification';
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.left = '50%';
+                notification.style.transform = 'translateX(-50%)';
+                notification.style.padding = '10px 20px';
+                notification.style.borderRadius = '25px';
+                notification.style.fontSize = '13px';
+                notification.style.zIndex = '9999';
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s';
+                notification.style.maxWidth = '90%';
+                notification.style.textAlign = 'center';
+                document.body.appendChild(notification);
+            }
+            
+            // Set notification style based on type
+            switch (type) {
+                case 'success':
+                    notification.style.background = 'rgba(10, 150, 80, 0.9)';
+                    notification.style.color = '#00d2d3';
+                    break;
+                case 'error':
+                    notification.style.background = 'rgba(179, 27, 27, 0.9)';
+                    notification.style.color = '#ff6b6b';
+                    break;
+                default:
+                    notification.style.background = 'rgba(30, 64, 175, 0.9)';
+                    notification.style.color = '#4facfe';
+            }
+            
+            // Update and show notification
+            notification.textContent = message;
+            notification.style.opacity = '1';
+            
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.textContent = '';
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

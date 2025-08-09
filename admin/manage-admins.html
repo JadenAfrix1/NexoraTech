@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Manage Admins | NEXORA-TECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        /* Reset & Mobile-First Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0e17;
+            color: #e0e0ff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header & Navbar */
+        header {
+            background: rgba(10, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1a2238;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            color: #4facfe;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #c0c0ff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4facfe;
+        }
+
+        /* Main Content Layout */
+        .content {
+            flex: 1;
+            padding: 1.5rem 0;
+        }
+
+        .admin-dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(10, 20, 40, 0.7);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: #c0c0ff;
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar a.active,
+        .sidebar a:hover {
+            background: #1a2238;
+            color: #4facfe;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+        }
+
+        .admin-header h2 {
+            color: #4facfe;
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Admin Controls */
+        .admin-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .admin-controls {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(15, 30, 50, 0.7);
+            border: 1px solid #1a2238;
+            border-radius: 8px;
+            color: #e0e0ff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #4facfe;
+        }
+
+        .btn {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #0a0e17;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        /* Admins Table */
+        .admins-section {
+            background: rgba(10, 20, 40, 0.7);
+            padding: 1.2rem;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        .admins-section h3 {
+            color: #4facfe;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 0.5rem;
+        }
+
+        table.table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        table.table th,
+        table.table td {
+            padding: 0.7rem;
+            text-align: left;
+            border-bottom: 1px solid #1a2238;
+            color: #e0e0ff;
+            white-space: nowrap;
+        }
+
+        table.table th {
+            color: #c0c0ff;
+            font-weight: 600;
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
+
+        .action-btn {
+            background: rgba(15, 30, 50, 0.7);
+            border: 1px solid #1a2238;
+            color: #ff6b6b;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 107, 107, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 1.2rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7a7a9d;
+            border-top: 1px solid #1a2238;
+        }
+
+        /* Neon Text Class */
+        .neon-text {
+            text-shadow: 0 0 5px #4facfe, 0 0 10px #4facfe;
+        }
+
+        /* Responsive Adjustments */
+        @media (min-width: 768px) {
+            .admin-dashboard {
+                flex-direction: row;
+            }
+
+            .sidebar {
+                min-width: 200px;
+                max-width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="../../courses.html" class="logo"><i class="fas fa-infinity"></i> NEXORA-TECH</a>
+                <ul class="nav-links auth-links">
+                    <!-- Populated by JavaScript -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="container">
+            <div class="admin-dashboard">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <ul>
+                        <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="manage-codes.html"><i class="fas fa-key"></i> Manage Codes</a></li>
+                        <li><a href="manage-admins.html" class="active"><i class="fas fa-users-cog"></i> Manage Admins</a></li>
+                    </ul>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="main-content">
+                    <div class="admin-header">
+                        <h2 class="neon-text">Manage Admins</h2>
+                    </div>
+
+                    <!-- Admin Controls -->
+                    <div class="admin-controls">
+                        <input type="email" id="admin-email" class="form-control" placeholder="Enter user email">
+                        <button id="add-admin-btn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Admin
+                        </button>
+                    </div>
+
+                    <!-- Admins Table -->
+                    <div class="admins-section">
+                        <h3>Admin Users</h3>
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admins-table">
+                                    <!-- Will be populated by JavaScript -->
+                                    <tr>
+                                        <td>John Admin</td>
+                                        <td>john@example.com</td>
+                                        <td>Super Admin</td>
+                                        <td><button class="action-btn"><i class="fas fa-trash"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sarah Manager</td>
+                                        <td>sarah@example.com</td>
+                                        <td>Admin</td>
+                                        <td><button class="action-btn"><i class="fas fa-trash"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mike Support</td>
+                                        <td>mike@example.com</td>
+                                        <td>Admin</td>
+                                        <td><button class="action-btn"><i class="fas fa-trash"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>2025 NEXORA-TECH | All Rights Reserved</p>
+        </div>
+    </footer>
+    
+    <script src="../../js/script.js"></script>
+</body>
+</html>

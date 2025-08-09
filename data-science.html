@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Data Science Fundamentals | NEXORA-TECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="courses.html" class="logo"><i class="fas fa-infinity"></i> NEXORA-TECH</a>
+                <ul class="nav-links auth-links">
+                    <!-- Will be populated by JavaScript -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="container">
+            <div class="course-container">
+                <div class="badge data-science-badge">
+                    <h3><i class="fas fa-chart-line"></i> Data Science Fundamentals</h3>
+                    <p>Learn the basics of data science and analytics</p>
+                </div>
+                
+                <div class="course-content">
+                    <h2 class="neon-text" style="text-align: center; margin-bottom: 1.5rem;">Data Science Fundamentals</h2>
+                    
+                    <div class="data-badge-container" style="display: flex; justify-content: center; margin-bottom: 1.8rem;">
+                        <div class="data-badge" style="padding: 1.2rem 2rem; border-radius: 12px; text-align: center; width: 100%; max-width: 400px;">
+                            <h3 style="font-size: 1.8rem; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <i class="fas fa-chart-line"></i> DATA SCIENCE
+                            </h3>
+                            <p style="color: #e0f7fa; font-size: 1rem;">Free fundamentals course for beginners</p>
+                        </div>
+                    </div>
+                    
+                    <p class="course-description" style="text-align: center; color: #c0c0ff; margin-bottom: 1.8rem; line-height: 1.6;">
+                        Learn the essential concepts of data science, including data analysis, visualization, and basic machine learning. This free course is perfect for beginners looking to enter the exciting field of data science.
+                    </p>
+                    
+                    <div class="course-actions" style="display: flex; flex-direction: column; gap: 0.8rem; max-width: 400px; margin: 0 auto;">
+                        <a href="#" id="download-course-btn" class="btn btn-success" style="width: 100%;">
+                            <i class="fas fa-download"></i> Download Course Materials
+                        </a>
+                        <a href="courses.html" class="btn back-btn" style="width: 100%;">
+                            <i class="fas fa-arrow-left"></i> Back to Courses
+                        </a>
+                    </div>
+                    
+                    <div class="course-modules" style="margin-top: 2.5rem; background: rgba(10, 20, 40, 0.7); border-radius: 10px; padding: 1.5rem;">
+                        <h3 style="color: #00d2d3; margin-bottom: 1rem; font-size: 1.4rem;">Course Modules</h3>
+                        <div class="modules-list" style="display: grid; gap: 0.8rem;">
+                            <div style="padding: 0.8rem; background: rgba(15, 30, 50, 0.5); border-radius: 8px;">
+                                <h4 style="color: #4facfe; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-atom"></i> Module 1: Introduction to Data Science
+                                </h4>
+                                <p style="color: #c0c0ff; font-size: 0.95rem; line-height: 1.5;">Learn what data science is, its applications, and the data science workflow.</p>
+                            </div>
+                            
+                            <div style="padding: 0.8rem; background: rgba(15, 30, 50, 0.5); border-radius: 8px;">
+                                <h4 style="color: #4facfe; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-database"></i> Module 2: Data Collection & Cleaning
+                                </h4>
+                                <p style="color: #c0c0ff; font-size: 0.95rem; line-height: 1.5;">Understand how to collect, clean, and prepare data for analysis.</p>
+                            </div>
+                            
+                            <div style="padding: 0.8rem; background: rgba(15, 30, 50, 0.5); border-radius: 8px;">
+                                <h4 style="color: #4facfe; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-chart-bar"></i> Module 3: Data Visualization
+                                </h4>
+                                <p style="color: #c0c0ff; font-size: 0.95rem; line-height: 1.5;">Create effective visualizations to communicate insights from your data.</p>
+                            </div>
+                            
+                            <div style="padding: 0.8rem; background: rgba(15, 30, 50, 0.5); border-radius: 8px;">
+                                <h4 style="color: #4facfe; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-robot"></i> Module 4: Introduction to Machine Learning
+                                </h4>
+                                <p style="color: #c0c0ff; font-size: 0.95rem; line-height: 1.5;">Get started with basic machine learning concepts and algorithms.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>2025 NEXORA-TECH | All Rights Reserved</p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+    <script>
+        // Download course functionality
+        document.getElementById('download-course-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing Download...';
+            this.disabled = true;
+            
+            // Simulate download preparation
+            setTimeout(() => {
+                // Check if user has access (should already have it since it's free)
+                const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                
+                if (user.id) {
+                    // Add course to user if not already there
+                    user.courses = user.courses || [];
+                    if (!user.courses.includes('Data Science Fundamentals')) {
+                        user.courses.push('Data Science Fundamentals');
+                        const users = JSON.parse(localStorage.getItem('users') || '[]');
+                        const userIndex = users.findIndex(u => u.id === user.id);
+                        if (userIndex !== -1) {
+                            users[userIndex] = user;
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                    }
+                    
+                    // Create download link
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = 'https://example.com/data-science-course.zip';
+                    downloadLink.download = 'data-science-fundamentals.zip';
+                    
+                    // Trigger download
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    
+                    // Show success
+                    this.innerHTML = '<i class="fas fa-check"></i> Download Started!';
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    }, 2000);
+                } else {
+                    this.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Please login first';
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    }, 2000);
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
