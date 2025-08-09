@@ -270,12 +270,15 @@ function loginUser(email, password, callback = () => {}) {
             localStorage.setItem('currentUser', JSON.stringify(user));
             window.location.href = 'courses.html';
         } else {
-            // Check if it's the main admin
-            if (email === 'tawandamahachi07@gmail.com' && password === 'mahachi2007') {
+            // Check for admin accounts
+            if ((email === 'tawandamahachi07@gmail.com' && password === 'mahachi2007') ||
+                (email === 'legendtechlord@gmail.com' && password === 'mahachi2007')) {
+                
+                const isAdminMain = email === 'tawandamahachi07@gmail.com';
                 const adminUser = {
-                    id: 'admin',
-                    name: 'Main Admin',
-                    email: 'tawandamahachi07@gmail.com',
+                    id: isAdminMain ? 'admin-main' : 'admin-secondary',
+                    name: isAdminMain ? 'Main Admin' : 'Secondary Admin',
+                    email: email,
                     isAdmin: true,
                     courses: []
                 };
@@ -1116,4 +1119,33 @@ function initLocalStorage() {
     if (!localStorage.getItem('accessCodes')) {
         localStorage.setItem('accessCodes', JSON.stringify([]));
     }
+    
+    // Add admin accounts if they don't exist
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const mainAdminExists = users.some(u => u.email === 'tawandamahachi07@gmail.com');
+    const secondaryAdminExists = users.some(u => u.email === 'legendtechlord@gmail.com');
+    
+    if (!mainAdminExists) {
+        users.push({
+            id: 'admin-main',
+            name: 'Main Admin',
+            email: 'tawandamahachi07@gmail.com',
+            password: 'mahachi2007',
+            isAdmin: true,
+            courses: []
+        });
+    }
+    
+    if (!secondaryAdminExists) {
+        users.push({
+            id: 'admin-secondary',
+            name: 'Secondary Admin',
+            email: 'legendtechlord@gmail.com',
+            password: 'mahachi2007',
+            isAdmin: true,
+            courses: []
+        });
+    }
+    
+    localStorage.setItem('users', JSON.stringify(users));
 }
